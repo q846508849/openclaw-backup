@@ -1,0 +1,4 @@
+skills/
+state/
+.skills_store_lock.json
+*.skill
