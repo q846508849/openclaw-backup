@@ -31,6 +31,25 @@
 
 ---
 
+## 备份操作（云逸设定，永久遵守）
+
+每次说「备份」时，执行以下两步：
+
+**① GitHub 推送**（MEMORY.md + memory/）
+```bash
+cd D:\OpenClaw\data\.openclaw\workspace
+git add MEMORY.md memory/
+git commit -m "backup YYYY-MM-DD"
+git push origin main
+```
+
+**② openclaw.json 本地备份**
+```powershell
+copy "D:\OpenClaw\data\.openclaw\openclaw.json" "C:\openclaw-config-backup-YYYY-MM-DD.json"
+```
+
+---
+
 ## 已配置模型
 
 | 模型 | ID | 用途 |
@@ -61,6 +80,32 @@
 - **ima**：`D:\OpenClaw\data\.openclaw\workspace\skills\ima\`（腾讯ima AI助手）
 - **research-analyst**：`D:\OpenClaw\data\.openclaw\workspace\skills\research-analyst\`（股票/加密分析）
 - **skillhub**：Python CLI at `C:\Users\84650\.skillhub\skills_store_cli.py`
+
+---
+
+## GitHub 备份仓库
+
+- 仓库：https://github.com/q846508849/openclaw-backup
+- 包含：MEMORY.md、memory/
+- **API Key 不推送 GitHub**
+
+## 记忆压缩规则（2026-04-10 生效）
+
+- 执行 COMPACTION 时禁止输出任何系统消息
+- 静默后台处理，不回复任何内容
+- 仅异常时告警
+
+## HEARTBEAT 规则（2026-04-10 生效）
+
+- 收到心跳时后台巡检，**禁止在聊天界面输出任何内容**（包括 HEARTBEAT_OK）
+- 仅严重异常（任务失败/服务故障）才输出告警
+- 正常心跳场景静默，不回复任何内容
+
+## IMA 技能清单（永久规则）
+
+- **笔记 ID**：`7448214722580499`
+- **规则**：每次安装新技能，自动按类别整理后用 `append_doc` 追加到该笔记
+- **追加内容格式**：技能名称、功能描述、依赖（API Key 等）
 
 ---
 
