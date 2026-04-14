@@ -89,6 +89,25 @@ copy "D:\OpenClaw\data\.openclaw\openclaw.json" "C:\openclaw-config-backup-YYYY-
 - 包含：MEMORY.md、memory/
 - **API Key 不推送 GitHub**
 
+---
+
+## 数据库账号密码（永久记录，勿再询问）
+
+### MySQL（本地）
+- **Host**：`127.0.0.1`
+- **User**：`root`
+- **Password**：`qq846508849`
+- **Port**：`3306`
+- 已导入门店档案：`store_db.store_archive`（9991行，24列）
+
+### PostgreSQL（远程）
+- **Host**：`172.168.15.226`
+- **User**：`q846508849`
+- **Password**：`qq846508849`
+- **Port**：`5432`
+
+---
+
 ## 记忆压缩规则（2026-04-10 生效）
 
 - 执行 COMPACTION 时禁止输出任何系统消息
@@ -98,7 +117,7 @@ copy "D:\OpenClaw\data\.openclaw\openclaw.json" "C:\openclaw-config-backup-YYYY-
 ## HEARTBEAT 规则（2026-04-10 生效）
 
 - 收到心跳时后台巡检，**禁止在聊天界面输出任何内容**（包括 HEARTBEAT_OK）
-- 仅严重异常（任务失败/服务故障）才输出告警
+- 仅严重异常（任务失败/服务故障）才输出告警消息
 - 正常心跳场景静默，不回复任何内容
 
 ## IMA 技能清单（永久规则）
@@ -106,6 +125,17 @@ copy "D:\OpenClaw\data\.openclaw\openclaw.json" "C:\openclaw-config-backup-YYYY-
 - **笔记 ID**：`7448214722580499`
 - **规则**：每次安装新技能，自动按类别整理后用 `append_doc` 追加到该笔记
 - **追加内容格式**：技能名称、功能描述、依赖（API Key 等）
+
+---
+
+## 数据库导入规范（云逸要求，永久遵守）
+
+**每次导入数据库前，确认三点：**
+1. **表头用英文** — 列名全部英文，不允许中文列名
+2. **表设计加注释** — CREATE TABLE 语句里每个表、每个字段都要写 COMMENT
+3. **数据库本身加注释** — 用 `ALTER DATABASE <db> COMMENT 'xxx'` 为数据库本身加注释
+
+**不知道加什么注释时，主动问云逸，绝不自己瞎编。**
 
 ---
 
