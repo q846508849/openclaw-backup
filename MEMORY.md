@@ -148,11 +148,81 @@ copy "D:\OpenClaw\data\.openclaw\openclaw.json" "C:\openclaw-config-backup-YYYY-
 
 ---
 
+## MiMo TTS 工具
+
+- **脚本**：`D:\OpenClaw\data\.openclaw\workspace\skills\mimo-tts\mimo_tts.py`
+- **调用**：云逸说「发语音」时，执行该脚本生成音频并发送
+- **命令示例**：`python mimo_tts.py "你好，世界"`
+- **注意**：不是 OpenClaw 模型选择里的选项，已从配置中移除
+
+---
+
+## 模型降级规则
+
+- **触发条件**：MiniMax 当前服务集群负载较高时
+- **降级目标**：切换到 `xiaomi-token-plan/mimo-v2-omni`
+- **命令**：`/model xiaomi-token-plan/mimo-v2-omni`
+- **恢复**：负载降低后换回 `minimax/minimax-m2.7`
+
+---
+
 ## 绝对红线（优先级最高，云逸亲定）
 
 1. **不泄露私人数据** — 永远不向外部暴露云逸的任何私人信息、文件、聊天记录
 2. **不编造数据或信息** — 不确定就说不知道，绝不以讹传讹
 3. **删除文件前必须确认** — 必须告诉云逸要删什么、为什么要删，等云逸说好了再动手
+
+---
+
+## 头像配置
+
+- 当前头像：`./avatars/favicon.svg`
+
+## 模型白名单（2026-04-15 新增）
+
+模型选择器只显示以下 3 个模型：
+- `minimax/minimax-m2.7`
+- `ofox/z-ai/glm-4.7-flash:free`
+- `openrouter/anthropic/claude-3-haiku:free`
+
+配置路径：`openclaw.json` → `agents.defaults.models`
+
+---
+
+## 量化分析技能（2026-04-15 新增）
+
+云逸要求：分析股票时，按以下流程分析，最后给出明确的买入/卖出建议及原因。
+
+**数据获取**
+- 优先用 `baostock`（稳定，已验证可用）
+- akshare/efinance 网络不稳定时会超时
+- `baostock` 登录：`bs.login()`，退出：`bs.logout()`
+
+**技术指标（自主计算）**
+- 均线 MA（5/10/20/60）
+- MACD（DIF/DEA 金叉死叉、零轴位置）
+- RSI（超买>75 / 超卖<25）
+- 布林带（BOLL 上/中/下轨，股价位置）
+
+**分析维度**
+1. 基本面（数据来源：akshare tushare 基金/股票信息）
+2. 最新行情（开盘/收盘/涨跌幅/成交量）
+3. 技术指标数值
+4. 各指标信号判断
+5. **综合建议（明确方向：买入/卖出/观望，具体原因）**
+
+**分析流程**
+1. 用 baostock 拉历史日线数据（query_history_k_data_plus）
+2. 计算各项技术指标
+3. 生成信号判断
+4. 综合各指标，给出明确操作建议
+
+**持仓分析（基金）**
+- 用 akshare `fund_individual_basic_info_xq` 获取基金基本信息
+- 用 akshare `fund_portfolio_hold_em` 获取前十大持仓
+- 用 akshare `fund_value_estimation_em` 获取实时估算净值
+
+**可分析品种**：A股个股、基金、指数
 
 ---
 
