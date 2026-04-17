@@ -141,7 +141,7 @@ copy "D:\OpenClaw\data\.openclaw\openclaw.json" "C:\openclaw-config-backup-YYYY-
 
 ## 待完成
 
-- [ ] 腾讯 WorkBuddy 小红书风格笔记（4节：是什么/核心功能/对比OpenClaw/优缺点）
+- [x] 腾讯 WorkBuddy 小红书风格笔记 + 配图（IMA note_id: `7450414198824712`）
 - [ ] IMA 技能实际功能验证
 - [ ] narrator-ai-cli（451⭐）GitHub限流，明天重试
 - [ ] nano-banana-pro-prompts-recommend-skill（1393⭐）GitHub限流，明天重试
@@ -223,6 +223,29 @@ copy "D:\OpenClaw\data\.openclaw\openclaw.json" "C:\openclaw-config-backup-YYYY-
 - 用 akshare `fund_value_estimation_em` 获取实时估算净值
 
 **可分析品种**：A股个股、基金、指数
+
+---
+
+## 阿里云百炼图像生成 API（2026-04-16 验证可用）
+
+**API Key**：`sk-778a171ccd484e61b5a148ca65674a25`
+
+**调用方式**：异步 POST
+```
+POST https://dashscope.aliyuncs.com/api/v1/services/aigc/text2image/image-synthesis
+Header: Authorization: Bearer <API_KEY>
+Header: X-DashScope-Async: enable
+Body: {"model": "qwen-image", "input": {"prompt": "..."}, "parameters": {"size": "768*1024", "n": 1}}
+```
+
+**查询结果**：GET `https://dashscope.aliyuncs.com/api/v1/tasks/{task_id}`
+
+**可用模型**：
+- `qwen-image` — 千问文生图（✅ 已验证）
+- `wanx-v1` — 万相文生图V1（✅ 已验证）
+- `qwen-image-2.0` — ❌ 不支持，返回 url error
+
+**注意**：同步调用返回 403 "current user api does not support synchronous calls"，必须用异步
 
 ---
 
