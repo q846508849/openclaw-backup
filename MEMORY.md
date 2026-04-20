@@ -123,8 +123,9 @@ copy "D:\OpenClaw\data\.openclaw\openclaw.json" "C:\openclaw-config-backup-YYYY-
 ## IMA 技能清单（永久规则）
 
 - **笔记 ID**：`7448214722580499`
-- **规则**：每次安装新技能，自动按类别整理后用 `append_doc` 追加到该笔记
+- **规则**：每次安装新技能，**必须**自动追加到该笔记（`append_doc`）
 - **追加内容格式**：技能名称、功能描述、依赖（API Key 等）
+- **脚本**：`scripts/ima-append.js`（需手动更新 content 后执行，env 传入 IMA 凭证）
 
 ---
 
