@@ -271,3 +271,31 @@ Body: {"model": "qwen-image", "input": {"prompt": "..."}, "parameters": {"size":
 - exec Python 脚本时 sys.stdout 编码导致中文乱码 → 用 write 工具写输出到 JSON 文件绕过
 - OpenClaw Windows 版 exec 进程会被 SIGKILL 杀死，非网络问题
 - GitHub clone 在中国网络环境常被重置，skillhub 是更稳定的安装渠道
+
+## 数据对比逻辑（2026-04-21 云逸设定，永久遵守）
+
+### 核心逻辑
+**归组先于过滤**：FGS_MERGE 归组必须在 ref_companies 检查之前执行，否则归组后的分公司的门店会被错误排除。
+
+**正确顺序：**
+```python
+fgs = r.get(FGS_COL)  # 原始FGS
+fgs_m = merge_fgs(fgs)  # 先归组
+if fgs_m not in ref_companies:  # 再过滤
+    excluded += 1
+    continue
+```
+
+**错误顺序（之前的问题）：** 归组在过滤之后，导致湖南郴州被排除（因为"湖南郴州"不在ref_companies里），而非归入湖南区域。
+
+### 本次改动
+- new_store_report.py：将 merge_fgs() 调用从过滤判断之后移到了之前
+- FGS_MERGE 仅保留 `{'湖南郴州': '湖南区域'}`（株洲衡阳保持不变）
+- 结果：湖南区域 old_cnt 从 30 → 34（含郴州5家），old_avg 与参考文件完全一致（24689.54）
+
+### 门店分类逻辑
+- **老店（old）**：首次营业日距今≥365天 → 归 groups['old']
+- **新店（g180）**：首次营业日在180天~365天前 → 归 groups['g180']
+- **新店（glt）**：首次营业日距今<180天 → 归 groups['glt']
+- **闭店（2099年）**：OPEN.year=2099 → CLOSE 设为 2099-12-31 后计算
+- **未来店**：首次营业日>cut 日期 → 跳过不统计
