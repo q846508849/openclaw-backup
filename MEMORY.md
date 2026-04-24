@@ -72,6 +72,7 @@ copy "D:\OpenClaw\data\.openclaw\openclaw.json" "C:\openclaw-config-backup-YYYY-
 | `TENCENT_MAP_KEY` | 腾讯地图 |
 | `IMA_OPENAPI_CLIENTID` | 腾讯ima |
 | `IMA_OPENAPI_APIKEY` | 腾讯ima |
+| `TENCENT_MEETING_TOKEN` | 腾讯会议 MCP（2026-04-22 安装）|
 
 ---
 
@@ -80,6 +81,7 @@ copy "D:\OpenClaw\data\.openclaw\openclaw.json" "C:\openclaw-config-backup-YYYY-
 - **ima**：`D:\OpenClaw\data\.openclaw\workspace\skills\ima\`（腾讯ima AI助手）
 - **research-analyst**：`D:\OpenClaw\data\.openclaw\workspace\skills\research-analyst\`（股票/加密分析）
 - **skillhub**：Python CLI at `C:\Users\84650\.skillhub\skills_store_cli.py`
+- **tencent-meeting-skill**：`D:\OpenClaw\data\.openclaw\workspace\skills\tencent-meeting-skill\`（腾讯会议 MCP，2026-04-22 从官方包安装，Token 已配置）
 
 ---
 
@@ -140,9 +142,13 @@ copy "D:\OpenClaw\data\.openclaw\openclaw.json" "C:\openclaw-config-backup-YYYY-
 
 ---
 
-## 待完成
+## 四文件对比流程（2026-04-22 新增）
 
-- [x] 腾讯 WorkBuddy 小红书风格笔记 + 配图（IMA note_id: `7450414198824712`）
+见 `memory/2026-04-22.md`，核心脚本 `four_file_compare_v2.py`
+
+### 关键规则
+- 归组先于过滤：`merge_fgs()` 在 `in ref_companies` 检查之前调用
+- FGS_MERGE 仅保留 `{'湖南郴州': '湖南区域'}`
 - [ ] IMA 技能实际功能验证
 - [ ] narrator-ai-cli（451⭐）GitHub限流，明天重试
 - [ ] nano-banana-pro-prompts-recommend-skill（1393⭐）GitHub限流，明天重试
